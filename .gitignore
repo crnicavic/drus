@@ -1,0 +1,5 @@
+﻿Domaci/Domaci2/docs/*
+!Domaci/Domaci2/docs/docs.tex
+!Domaci/Domaci2/docs/docs.pdf
+Domaci/Domaci2/Domaci2/bin/*
+Domaci/Domaci2/Domaci2/obj
