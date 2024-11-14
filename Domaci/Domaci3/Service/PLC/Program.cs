@@ -16,7 +16,9 @@ namespace PLC
 
         static void Main(string[] args)
         {
-            const int sleepTimeMilli = 1500;
+            const int sleepTimeMilli = 15000;
+            // testiranje
+            //const int sleepTimeMilli = 1500;
             ServiceReference1.PublisherClient publisherClient = new ServiceReference1.PublisherClient();
             while (true)
             {

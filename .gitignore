@@ -5,7 +5,8 @@ Domaci/Domaci2/Domaci2/bin/*
 Domaci/Domaci2/Domaci2/obj
 Domaci/Domaci2/.vs
 
+Domaci/Domaci3/doc/*
+!Domaci/Domaci3/doc/docs.tex
+!Domaci/Domaci3/doc/docs.pdf
 
-Domaci/Domaci3/docs/*
-!Domaci/Domaci3/docs/docs.tex
-!Domaci/Domaci3/docs/docs.pdf
+Vezbe
