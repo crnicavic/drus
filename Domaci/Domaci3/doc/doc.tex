@@ -83,24 +83,26 @@ Ukoliko se od PLC-a traži da šalje vrednost promenljive koja ne postoji, on
 šalje nulu, specifikacija problema to ne zahteva, ali rešenje implementira
 mogućnost da ako se ta promenljiva pojavi, PLC će početi da je šalje.
 \section{Logika rešenja}
-Kada HMI pošalje navede koju promeljivu želi da prati tako što navede adresu
+Kada HMI navede koju promeljivu želi da prati tako što navede adresu
 ili naziv, u \textbf{InitHMI} se prvo određuje da li je poslata adresa ili 
 naziv.
 Adrese se odlikuju time što počinju sa "prefiksom" \textbf{ADDR} koji je praćen
 brojem.
-Nakon toga se unutar servisa panelu dodeljuje identifikacioni broj kako bi se
-oni razlikovali, te se kreira instanca klase \textbf{Panel} koja se upisuje
+Nakon toga se unutar servisa panelu dodeljuje identifikacioni broj (ID) kako bi
+se oni razlikovali, te se kreira instanca klase \textbf{Panel} koja se upisuje
 u rečnik \textbf{panels} i callback funkcija tog procesa se upisuje u drugi
 rečnik \textbf{panelCallbacks}.
-Bitno je reći da se rečnici mogu zameniti nizovima i postiči istu funkcionalnost,
-ali ovakav pristup je manje sklon greškama.
+Bitno je reći da se rečnici (osim onog koji čuva adrese i nazive promenljivih) 
+mogu zameniti nizovima i postiči istu funkcionalnost, ali ovakav pristup je
+manje sklon greškama.
 \par Publisher tj. PLC treba da na svakih 15 sekundi pošalje nove vrednosti
 promenljivih svim pretplaćenim panelima.
 Na početku \textbf{Publish} metode se kreira lista \textbf{idsToNotify} sa
-identifikacionim brojevima (ID) svih pretplaćenih panela.
+identifikacionim brojevima svih pretplaćenih panela.
 Potom se generiše nasumičan broj za svaku od promenljivih koji se šalje svakom
-panelu, čiji identifikacioni broj se uklanja iz liste nakon slanja.
-Slanje poruke podrazumeva pozivanje odgovarajuće callback funkcije, prosleđivanje
+panelu koji je pretplaćen na postojeću promenljivu, nakon čega se ID tog panela
+briše iz liste.
+Slanje poruke podrazumeva pozivanje odgovarajuće callback funkcije i prosleđivanje
 argumenata koji predstavljaju poslate informacije.
 Ukoliko je neki panel pretplaćen na nepostojeću promenljivu, njegov ID ostaje
 u listi nakon završetka petlje, u drugoj petlji se svim panelima koji nisu 
@@ -110,12 +112,12 @@ dobili poruku šalje nula.
 vertikalnih crtica.
 \textbf{GRAPH\_OFFSET} je konstanta kojom se graf pomera nekoliko mesta u desno
 kako bi se napravilo mesta za skalu.
-Ovde ta skala poprilični jednostvna, broj 0 skroz dole i broj 100 skroz
-gore dok se između njih ispisuje poslednja pristigla vrednost na odgovarajučoj
+Skala je poprilično jednostvna, broj 0 se nalazi na dnu skale, a broj 100 na
+vrhu, dok se između njih ispisuje poslednja pristigla vrednost na odgovarajučoj
 visini.
 Glavna stvar u crtanju koja pravi probleme je činjenica da y-osa raste u
-suprotnom smeru u odnosu na Dekartov koordinanti sistem, stoga stvari moraju
-biti prilagođene drugačije. 
+suprotnom smeru u odnosu na Dekartov koordinanti sistem, stoga matematika oko
+crtanja mora biti prilagođena.
 \section{Rezulati}
 Kada se pokrenu servis, panel i plc (PLC i Panel mogu da se pokrenu u
 proizvoljnom redosledu i neće doći do izuzetka) u konzoli aplikacije za panel
