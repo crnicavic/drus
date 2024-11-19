@@ -1,0 +1,174 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}
+    \geometry{
+        a4paper,
+        lmargin=2cm,
+        rmargin=2cm,
+        tmargin=2cm,
+        bmargin=2cm
+    }
+\usepackage{float}
+\usepackage{indentfirst}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{fontspec}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[T1]{fontenc}
+\lstloadlanguages{C,C++,csh,Java}
+
+\setmainfont[Mapping=tex-text]{Times New Roman}
+\definecolor{red}{rgb}{0.6,0,0}
+\definecolor{blue}{rgb}{0,0,0.6}
+\definecolor{green}{rgb}{0,0.8,0}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+\renewcommand{\contentsname}{Sadržaj}
+
+\lstset{
+language=csh,
+basicstyle=\footnotesize\ttfamily,
+numbers=left,
+numberstyle=\tiny,
+numbersep=5pt,
+frame=box,
+tabsize=2,
+extendedchars=true,
+breaklines=true,
+stringstyle=\color{blue}\ttfamily,
+showspaces=false,
+showtabs=false,
+xleftmargin=17pt,
+framexleftmargin=17pt,
+framexrightmargin=5pt,
+framexbottommargin=4pt,
+commentstyle=\color{green},
+morecomment=[l]{//}, %use comment-line-style!
+morecomment=[s]{/*}{*/}, %for multiline comments
+showstringspaces=false,
+morekeywords={ abstract, event, new, struct,
+as, explicit, null, switch,
+base, extern, object, this,
+bool, false, operator, throw,
+break, finally, out, true,
+byte, fixed, override, try,
+case, float, params, typeof,
+catch, for, private, uint,
+char, foreach, protected, ulong,
+checked, goto, public, unchecked,
+class, if, readonly, unsafe,
+const, implicit, ref, ushort,
+continue, in, return, using,
+decimal, int, sbyte, virtual,
+default, interface, sealed, volatile,
+delegate, internal, short, void,
+do, is, sizeof, while,
+double, lock, stackalloc,
+else, long, static,
+enum, namespace, string},
+keywordstyle=\color{cyan},
+identifierstyle=\color{black},
+backgroundcolor=\color{white},
+}
+
+\title{Domaci 3 - kriptografija}
+\author{Ognjen Čavić E2 161/2024}
+\date{Novembar 2024}
+\begin{document}
+\maketitle
+\section{Prvi zadatak}
+\par Prvi zadatku je šifrovati frazu \textbf{VENI VIDI VICI} pomoću
+\textit{Playfair} algoritma.
+Ponuđeni ključevi, tj reči kojima se matrica slova može pomešati, su
+\textbf{IRITIRATI}, \textbf{ANANAS} i \textbf{SUNCE}.
+U opštem slučaju, cilj je da se za ključ odabere reč sa što više različitih slova
+jer to rezultuje tabelom koja je više izmešana.
+Stoga je najbolja reč od ponuđenih \textbf{SUNCE} jer ima najviše različitih
+slova čak iako je najkraća, što rezultuje tabelom kojom će se poruka šifrovati.
+\begin{center}
+\begin{table}[h]
+	\centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+		S & U & N & C & E \\
+		\hline
+		A & B & D & F & G \\
+		\hline
+		H & I & K & L & M \\
+		\hline
+		O & P & Q & R & T \\
+		\hline
+		V & W & X & Y & Z \\
+		\hline
+    \end{tabular}
+	\caption*{Tabela 1: Matrica slova \textit{Playfair} algoritma kada se
+	koristi reč \textbf{SUNCE}}
+\end{table}
+\end{center}
+Nakon što se fraza podeli u segmente od po dva slova koji se šifruju na osnovu
+matrice, dobija se konačna poruka:
+\begin{center}
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+		\hline
+		Segmenti originalne poruke & VE & NI & VI & DI & VI & CI \\
+		\hline
+		Segmenti šifrovane poruke & ZS & UK & WH & BK & WH & UL \\
+		\hline
+    \end{tabular}
+	\caption*{Tabela 2: Odgovarajući segmenti šifrovane i originalne poruke}
+\end{table}
+\end{center}
+koja glasi \textbf{ZSUKWHBKWHUL}.
+\newpage
+\section{Drugi zadatak}
+\par Dok se prvi zadatak bavio šifrovanjem poruke, cilj drugog jeste da
+dešifruje primljenu poruku ukoliko je ključ poznat.
+Dodatna komplikacija je to što koristi ćirilično pismo, koja sadrži 30 slova i
+zahteva produženje tabele.
+Fraza koju treba dešifrovati je \textbf{ОЗМЕЖАУЛМОЛИЛПНХОЏ} dok ključ
+koji se koristi je \textbf{КОЛОКВИЈУМ} i nakon uklanjanja svih slova koja
+se ponavljaju dobija se \textbf{КОЛВИЈУМ}.
+Na osnovu ključa se formira matrica slova.
+\begin{center}
+\begin{table}[h]
+	\centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+		К & О & Л & В & И & Ј \\
+		\hline
+		У & М & А & Б & Г & Д \\
+		\hline
+		Ђ & Е & Ж & З & Љ & Н \\
+		\hline
+		Њ & П & Р & С & Т & Ћ \\
+		\hline
+		Ф & Х & Ц & Ч & Џ & Ш \\
+		\hline
+    \end{tabular}
+	\caption*{Tabela 3: Tabela \textit{Playfair} algortima za ćirilična slova}
+\end{table}
+\end{center}
+Postupak dešifrovanja je isti kao i postupak šifrovanja sa tim da za slova
+u istom redu ili koloni pomera se ulevo umesto udesno i na gore umesto na dole,
+respektivno.
+Nakon što je sve potrebno za dešifrovanje poznato, preostaje samo to i odraditi:
+\begin{center}
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+		\hline
+		Segmenti šifrovane poruke & ОЗ & МЕ & ЖА & УЛ & МО & ЛИ & ЛП & НХ & ОЏ \\
+		\hline
+		Segmenti dešifrovane poruke & ВЕ & ОМ & АЛ & АК & О\textcolor{red}{Х}
+									& ОВ & ОР & ЕШ & ИХ \\
+		\hline
+	\end{tabular}
+	\caption*{Tabela 4: Odgovarajući segmenti šifrovane i originalne poruke}
+\end{table}
+\end{center}
+nakon odbacivanja obojenog \textcolor{red}{\textbf{Х}} koje je umetnuto kako bi
+se izbeglo da se dva ista slova nalaze u segmentu, dobija se konačna poruka
+\textbf{ВЕОМА ЛАКО ОВО РЕШИХ}.
+\end{document}
+
