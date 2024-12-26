@@ -1,0 +1,1 @@
+.\Opc.Ua.ModelCompiler.exe compile -d2 ..\..\..\..\..\OpcUa\XMLFile1.xml -cg ..\..\..\..\..\ModelDesign.csv -o2 ..\..\..\..\..\BatchPlantWPF\ -version v104
