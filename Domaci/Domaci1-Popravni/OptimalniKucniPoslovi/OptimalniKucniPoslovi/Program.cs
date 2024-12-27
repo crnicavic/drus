@@ -112,22 +112,25 @@ namespace OptimalniKucniPoslovi
         static async Task Main(string[] args)
         {
             sw.Start();
-            List<activeChore> activeChores = new List<activeChore> { PrepareOnions, PreparePotato, PrepareMeat };
+            List<activeChore> caseroleChores = new List<activeChore> { PrepareOnions, PreparePotato, PrepareMeat };
+            activeChore shoppingChore = GoShopping;
             Task laundryTask = WashLaundry();
             Task dishesTask = WashDishes();
             List<Task> passiveChores = new List<Task> { laundryTask, dishesTask };
 
-            foreach (var chore in activeChores)
+            // spremanje sastojaka za musaku
+            foreach (var chore in caseroleChores)
             {
                 // pre izvrsavanja aktivnog zadatka proveri da li je neki od pasivnih zavrsen, bez da blokiram glavnu nit
                 checkPassiveChoreCompletion(ref passiveChores);
                 chore();
             }
+
             checkPassiveChoreCompletion(ref passiveChores);
             Task caseroleTask = CookCaserole();
             passiveChores.Add(caseroleTask);
             checkPassiveChoreCompletion(ref passiveChores);
-            GoShopping();
+            shoppingChore();
 
             // ovde treba da blokiram nit dok se poslovi ne zavrse, stoga ne koristim funkciju
             while (passiveChores.Count > 0)
@@ -138,7 +141,7 @@ namespace OptimalniKucniPoslovi
                 passiveChores.RemoveAt(finishedTaskIndex);
                 passiveChoreMessage.RemoveAt(finishedTaskIndex);
             }
-
+            sw.Stop();
             Console.ReadLine();
         }
     }
