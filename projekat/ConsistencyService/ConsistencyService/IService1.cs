@@ -12,7 +12,7 @@ namespace ConsistencyService
     public class SensorInfo
     {
         [DataMember(Order = 1, IsRequired = true)]
-        public int publisher_id;
+        public int sensor_id;
         [DataMember(Order = 2, IsRequired = true)]
         public float temperature;
         [DataMember(Order = 3, IsRequired = true)]
