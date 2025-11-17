@@ -9,12 +9,12 @@ using System.Text;
 namespace ConsistencyService
 {
     [DataContract]
-    public class SensorInfo
+    public class TemperatureInfo
     {
         [DataMember(Order = 1, IsRequired = true)]
         public int sensor_id;
         [DataMember(Order = 2, IsRequired = true)]
-        public float temperature;
+        public double temperature;
         [DataMember(Order = 3, IsRequired = true)]
         public DateTime timestamp;
     }
@@ -23,14 +23,14 @@ namespace ConsistencyService
     public interface IPublisher
     {
         [OperationContract(IsOneWay = true)]
-        void publishTemp(SensorInfo t);
+        void publishTemp(TemperatureInfo t);
     }
 
     [ServiceContract]
     public interface ISubscriber
     {
-        [OperationContract(IsOneWay = true)]
-        SensorInfo querySensor(int id);
+        [OperationContract]
+        TemperatureInfo querySensor(int id);
     }
 
 }

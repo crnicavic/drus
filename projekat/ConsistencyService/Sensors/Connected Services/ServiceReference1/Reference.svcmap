@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="dbfaa31a-4f2d-4c14-877d-fa2eeb225ac1" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:50999/ConsistencyService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ConsistencyService.xsd" MetadataType="Schema" ID="9da107eb-1edc-4d05-84c8-53f3beeca11c" SourceId="1" SourceUrl="http://localhost:50999/ConsistencyService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ConsistencyService1.xsd" MetadataType="Schema" ID="1f58072c-7636-445f-9c60-5e86c6ad34da" SourceId="1" SourceUrl="http://localhost:50999/ConsistencyService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ConsistencyService.wsdl" MetadataType="Wsdl" ID="8ba8297b-ff96-48dc-b0a4-1fce176528c7" SourceId="1" SourceUrl="http://localhost:50999/ConsistencyService.svc?wsdl" />
+    <MetadataFile FileName="ConsistencyService2.xsd" MetadataType="Schema" ID="9b9cae21-3cb6-4fe4-a3c7-10a34daca548" SourceId="1" SourceUrl="http://localhost:50999/ConsistencyService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ConsistencyService.disco" MetadataType="Disco" ID="b7679c1c-9734-4f5a-a5c5-ac17e15c7a66" SourceId="1" SourceUrl="http://localhost:50999/ConsistencyService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

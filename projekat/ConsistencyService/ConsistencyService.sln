@@ -1,15 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36623.8 d17.14
+VisualStudioVersion = 17.14.36623.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsistencyService", "ConsistencyService\ConsistencyService.csproj", "{75A023A2-B968-4F5A-AEC3-EA6F1AF8EE27}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors", "Sensors\Sensors.csproj", "{ADD4896B-9B7C-41C0-930A-4FAE1BED8458}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75A023A2-B968-4F5A-AEC3-EA6F1AF8EE27} = {75A023A2-B968-4F5A-AEC3-EA6F1AF8EE27}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsistencyManager", "ConsistencyManager\ConsistencyManager.csproj", "{1B6BE498-33F8-460D-AB05-5D6271E101FF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75A023A2-B968-4F5A-AEC3-EA6F1AF8EE27} = {75A023A2-B968-4F5A-AEC3-EA6F1AF8EE27}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{0BAD483C-428E-40CF-9545-6C7C6A948B41}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SensorsDatabaseContext", "SensorsDBContext\SensorsDatabaseContext.csproj", "{5864B18D-DE07-47AA-9D0D-C6A8A68E6CFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +35,10 @@ Global
 		{1B6BE498-33F8-460D-AB05-5D6271E101FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B6BE498-33F8-460D-AB05-5D6271E101FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B6BE498-33F8-460D-AB05-5D6271E101FF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0BAD483C-428E-40CF-9545-6C7C6A948B41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0BAD483C-428E-40CF-9545-6C7C6A948B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0BAD483C-428E-40CF-9545-6C7C6A948B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0BAD483C-428E-40CF-9545-6C7C6A948B41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5864B18D-DE07-47AA-9D0D-C6A8A68E6CFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5864B18D-DE07-47AA-9D0D-C6A8A68E6CFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5864B18D-DE07-47AA-9D0D-C6A8A68E6CFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5864B18D-DE07-47AA-9D0D-C6A8A68E6CFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
