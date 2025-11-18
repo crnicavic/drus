@@ -17,6 +17,8 @@ namespace ConsistencyService
         public double temperature;
         [DataMember(Order = 3, IsRequired = true)]
         public DateTime timestamp;
+        [DataMember(Order = 4, IsRequired = true)]
+        public string source;
     }
 
     [ServiceContract]

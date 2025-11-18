@@ -5,6 +5,7 @@
       <xs:element name="sensor_id" type="xs:int" />
       <xs:element name="temperature" type="xs:double" />
       <xs:element name="timestamp" type="xs:dateTime" />
+      <xs:element name="source" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TemperatureInfo" nillable="true" type="tns:TemperatureInfo" />

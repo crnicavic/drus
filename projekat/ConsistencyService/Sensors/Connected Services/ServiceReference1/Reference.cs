@@ -28,6 +28,8 @@ namespace Sensors.ServiceReference1 {
         
         private System.DateTime timestampField;
         
+        private string sourceField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -73,6 +75,19 @@ namespace Sensors.ServiceReference1 {
                 if ((this.timestampField.Equals(value) != true)) {
                     this.timestampField = value;
                     this.RaisePropertyChanged("timestamp");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=3)]
+        public string source {
+            get {
+                return this.sourceField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.sourceField, value) != true)) {
+                    this.sourceField = value;
+                    this.RaisePropertyChanged("source");
                 }
             }
         }

@@ -29,6 +29,7 @@ namespace Sensors
                 tasks.Add(t);
             }
             await Task.WhenAll(tasks);
+
         }
     }
 }

@@ -9,93 +9,17 @@
 //------------------------------------------------------------------------------
 
 namespace ConsistencyManager.ServiceReference1 {
-    using System.Runtime.Serialization;
-    using System;
     
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SensorInfo", Namespace="http://schemas.datacontract.org/2004/07/ConsistencyService")]
-    [System.SerializableAttribute()]
-    public partial class SensorInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        private int sensor_idField;
-        
-        private float temperatureField;
-        
-        private System.DateTime timestampField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int sensor_id {
-            get {
-                return this.sensor_idField;
-            }
-            set {
-                if ((this.sensor_idField.Equals(value) != true)) {
-                    this.sensor_idField = value;
-                    this.RaisePropertyChanged("sensor_id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public float temperature {
-            get {
-                return this.temperatureField;
-            }
-            set {
-                if ((this.temperatureField.Equals(value) != true)) {
-                    this.temperatureField = value;
-                    this.RaisePropertyChanged("temperature");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public System.DateTime timestamp {
-            get {
-                return this.timestampField;
-            }
-            set {
-                if ((this.timestampField.Equals(value) != true)) {
-                    this.timestampField = value;
-                    this.RaisePropertyChanged("timestamp");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IPublisher")]
     public interface IPublisher {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPublisher/publishTemp")]
-        void publishTemp(ConsistencyManager.ServiceReference1.SensorInfo t);
+        void publishTemp(ConsistencyService.TemperatureInfo t);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IPublisher/publishTemp")]
-        System.Threading.Tasks.Task publishTempAsync(ConsistencyManager.ServiceReference1.SensorInfo t);
+        System.Threading.Tasks.Task publishTempAsync(ConsistencyService.TemperatureInfo t);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -125,11 +49,11 @@ namespace ConsistencyManager.ServiceReference1 {
                 base(binding, remoteAddress) {
         }
         
-        public void publishTemp(ConsistencyManager.ServiceReference1.SensorInfo t) {
+        public void publishTemp(ConsistencyService.TemperatureInfo t) {
             base.Channel.publishTemp(t);
         }
         
-        public System.Threading.Tasks.Task publishTempAsync(ConsistencyManager.ServiceReference1.SensorInfo t) {
+        public System.Threading.Tasks.Task publishTempAsync(ConsistencyService.TemperatureInfo t) {
             return base.Channel.publishTempAsync(t);
         }
     }
@@ -139,10 +63,10 @@ namespace ConsistencyManager.ServiceReference1 {
     public interface ISubscriber {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISubscriber/querySensor", ReplyAction="http://tempuri.org/ISubscriber/querySensorResponse")]
-        ConsistencyManager.ServiceReference1.SensorInfo querySensor(int id);
+        ConsistencyService.TemperatureInfo querySensor(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISubscriber/querySensor", ReplyAction="http://tempuri.org/ISubscriber/querySensorResponse")]
-        System.Threading.Tasks.Task<ConsistencyManager.ServiceReference1.SensorInfo> querySensorAsync(int id);
+        System.Threading.Tasks.Task<ConsistencyService.TemperatureInfo> querySensorAsync(int id);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -172,11 +96,11 @@ namespace ConsistencyManager.ServiceReference1 {
                 base(binding, remoteAddress) {
         }
         
-        public ConsistencyManager.ServiceReference1.SensorInfo querySensor(int id) {
+        public ConsistencyService.TemperatureInfo querySensor(int id) {
             return base.Channel.querySensor(id);
         }
         
-        public System.Threading.Tasks.Task<ConsistencyManager.ServiceReference1.SensorInfo> querySensorAsync(int id) {
+        public System.Threading.Tasks.Task<ConsistencyService.TemperatureInfo> querySensorAsync(int id) {
             return base.Channel.querySensorAsync(id);
         }
     }

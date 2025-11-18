@@ -33,7 +33,7 @@ namespace ConsistencyService
 
             row.timestamp = t.timestamp;
             row.temperature = t.temperature;
-            row.source = "SENSOR";
+            row.source = t.source;
 
             switch (t.sensor_id)
             {
@@ -55,7 +55,29 @@ namespace ConsistencyService
 
         public TemperatureInfo querySensor(int id)
         {
-            return null;
+            DBInfo_Sensor row;
+            switch (id)
+            {
+                case 1: row = context.SensorTable1.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                case 2: row = context.SensorTable2.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                case 3: row = context.SensorTable3.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                case 4: row = context.SensorTable4.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                case 5: row = context.SensorTable5.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                case 6: row = context.SensorTable6.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                case 7: row = context.SensorTable7.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                case 8: row = context.SensorTable8.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                case 9: row = context.SensorTable9.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                case 10: row = context.SensorTable10.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                default: throw new Exception("INVALID SENSOR ID!");
+
+            }
+
+            TemperatureInfo result = new TemperatureInfo();
+            result.timestamp = row.timestamp;
+            result.temperature = row.temperature;
+            result.source = row.source;
+            result.sensor_id = id;
+            return result;
         }
     }
 }

@@ -24,6 +24,7 @@ namespace Sensors
             {
                 TemperatureInfo info = new TemperatureInfo();
                 info.sensor_id = this.sensorID;
+                info.source = "SENSOR";
                 while (!cancelToken.IsCancellationRequested)
                 {
                     // ensurance that the delay is at least 1 second
