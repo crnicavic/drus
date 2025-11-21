@@ -72,12 +72,17 @@ namespace ConsistencyService
 
             }
 
+            // if there is nothing return zeroes just to prevent crashes
             TemperatureInfo result = new TemperatureInfo();
-            result.timestamp = row.timestamp;
-            result.temperature = row.temperature;
-            result.source = row.source;
-            result.sensor_id = id;
+            if (row != null)
+            {
+                result.timestamp = row.timestamp;
+                result.temperature = row.temperature;
+                result.source = row.source;
+                result.sensor_id = id;
+            }
             return result;
         }
+
     }
 }
