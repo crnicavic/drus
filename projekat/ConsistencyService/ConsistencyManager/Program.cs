@@ -93,6 +93,7 @@ namespace ConsistencyManager
                 Console.WriteLine($"BEST: {best.sensor_id}: {best.temperature}, AVG: {avg}");
                 Console.WriteLine();
                 best.source = "CONSISTENCY_MANAGER";
+                best.timestamp = DateTime.Now;
                 for (int id = 1; id <= 10; id++)
                 {
                     best.sensor_id = id;
