@@ -1,0 +1,118 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}
+    \geometry{
+        a4paper,
+        lmargin=2cm,
+        rmargin=2cm,
+        tmargin=2cm,
+        bmargin=2cm
+    }
+\usepackage{float}
+\usepackage{indentfirst}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{fontspec}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[T1]{fontenc}
+\lstloadlanguages{C,C++,csh,Java}
+
+\setmainfont[Mapping=tex-text]{Times New Roman}
+\definecolor{red}{rgb}{0.6,0,0}
+\definecolor{blue}{rgb}{0,0,0.6}
+\definecolor{green}{rgb}{0,0.8,0}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+\renewcommand{\contentsname}{Sadržaj}
+
+\lstset{
+language=csh,
+basicstyle=\footnotesize\ttfamily,
+numbers=left,
+numberstyle=\tiny,
+numbersep=5pt,
+frame=box,
+tabsize=2,
+extendedchars=true,
+breaklines=true,
+stringstyle=\color{blue}\ttfamily,
+showspaces=false,
+showtabs=false,
+xleftmargin=17pt,
+framexleftmargin=17pt,
+framexrightmargin=5pt,
+framexbottommargin=4pt,
+commentstyle=\color{green},
+morecomment=[l]{//}, %use comment-line-style!
+morecomment=[s]{/*}{*/}, %for multiline comments
+showstringspaces=false,
+morekeywords={ abstract, event, new, struct,
+as, explicit, null, switch,
+base, extern, object, this,
+bool, false, operator, throw,
+break, finally, out, true,
+byte, fixed, override, try,
+case, float, params, typeof,
+catch, for, private, uint,
+char, foreach, protected, ulong,
+checked, goto, public, unchecked,
+class, if, readonly, unsafe,
+const, implicit, ref, ushort,
+continue, in, return, using,
+decimal, int, sbyte, virtual,
+default, interface, sealed, volatile,
+delegate, internal, short, void,
+do, is, sizeof, while,
+double, lock, stackalloc,
+else, long, static,
+enum, namespace, string},
+keywordstyle=\color{cyan},
+identifierstyle=\color{black},
+backgroundcolor=\color{white},
+}
+
+\title{Projektni zadatak - Konzistencija}
+\author{Ognjen Čavić E2 161/2024}
+\date{\today}
+\begin{document}
+\maketitle
+\tableofcontents
+\break
+\section{Uvod}
+Potrebno je napraviti sistem gde postoji 10 senzora koji na nasumičnom itervalu
+generišu nasumične vrednosti i "menadžera" koji poravnava te vrednosti tj. bira
+jednu od tih vrednosti koja će biti proglašena za glavnu. Ovaj sistem se može
+opisati kao skup od 3 glavne komponente:
+\begin{itemize}
+	\item \textbf{Simulator} - Pokreće po jednu nit za svaki od senzora, koji generiše
+		novu vrednost na vremenskom intervalu između 1 i 10 sekundi i upisuje je
+		u sopstvenu tabelu u bazi podataka pomoću \textit{Entity Framework}-a.
+	\item \textbf{Menadžer}- Na svakih 60 sekundi vrši poravnanje, tj. bira 
+		čitanje senzora koje je najbolje i koje će biti upisano u tabele svih 
+		senzora.
+		Kriterijum najbolje vrednosti je ono koje je najskorije u prihvatljivom
+		opsegu $\pm5^oC$. Ukoliko ono ne postoji samo uzeti najskorije.
+	\item \textbf{WCF servis} - Definiše način komunikacije između menadžera i
+		senzora.
+\end{itemize}
+\section{Organizacija rešenja}
+Rešenje se sastoji od 4 manja projekta, gde svaki predstavlja jednu od celina
+koja je prethodno navedena, sa tim da dodati četvrti projekat opisuje način
+struktuiranja podataka za upis u bazu:
+\begin{itemize}
+	\item ConsistencyManager - menadžer koji vrši poravnanje
+	\item ConsistencyService - WCF servis
+	\item Sensors - pokretanje niti koje simuliraju senzore
+	\item SensorsDatabaseContext - kontekst baze podataka
+\end{itemize}
+\subsection{ConsistencyManager}
+\subsubsection{ConsistencyManager/Program.cs}
+Definiše dve funkcije, \textbf{Main} i \textbf{findBest}.
+\textbf{Main} funkcija na svakih 60 sekundi šalje upit bazi podataka za 
+poslednji podatak iz svake tabele, pomoću funkcije \textbf{findBest} određuje
+koji od senzora je dao najbolju vrednost i upisuje je u svaku od tabela.
+Potrebno je napomenuti da menadžer instancira \textit{subscribera} i 
+\textit{publishera}, koje koristi za upite i upise u bazu, respektivno.
+\subsection{ConsistencyService}
+\subsubsection{ConsistencyService/ConsistencyService.cs}
+
+\end{document}
