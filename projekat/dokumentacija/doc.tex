@@ -158,12 +158,17 @@ Definicija klase \textbf{Sensor}, koja sadrži 5 ali praktično 4 polja.
 		statički generator
 	\item \textbf{publisherClient} - klijent servisa koji će pisati u bazu
 		podataka
+	\item \textbf{\_randomLock} - objekat koji se koristi za zaključavanje
+		dela koda koji generiše nasumične brojeve.
 \end{itemize}
 Polje \textbf{random} je postavljeno da bude jednako statičkom \textbf{\_random}
 zato što ako svaka instanca senzora ima svoj generator, desiće se to da imam 10
 generatora nasumičnih brojeva sa vrlo sličnim "semenom" tj. \textbf{seed-om}.
 To znači da će sekvence generisanja brojeva za sve senzore biti identične zato
 što se implicitno koristi seed koji zavisi od vremena inicijalizacije.
+Međutim, pošto objekat koji pravi nasumične brojeve može da pukne ukoliko ga
+više od jedne niti koristi u bilo kom trenutku, potrebno je zaključati deo koda
+koji poziva metode tog objekta.
 \subsection{SensorsDatabaseContext}
 \subsubsection{SensorsDatabaseContext/DbContext.cs}
 Definicija kako su organizovani podaci unutar baze podataka.
@@ -197,11 +202,30 @@ podigne proizvoljan broj projekata u proizvoljnom redosledu.
 Desnim klikom na naziv celog rešenja tj. \textbf{solution-a}, i odabirom opcije
 properties otvara se prozor gde je potrebno sa leve strane odabrati \textbf{Configure
 Startup Projects} i konfigurisati ga kao na slici:
-\begin{figure}[h!]
-	\includegraphics[width=\linewidth]{figs/Screenshot 2025-11-26 123940.png}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{figs/Screenshot 2025-11-26 123940.png}
 	\caption*{Slika 1: Podešavanje pokretanja projekta}
 \end{figure}
 \subsection{Rezultati}
-
+Nakon pokretanja, otvaraju se dva prozora.
+Na jednom prozoru se ispisuju poruke o tome koji senzor je očitao koju vrednost,
+dok na drugom prozoru se  ispisuju poruke menadžera nakon što izvrši poravnanje.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{figs/rezultat_1.png}
+	\caption*{Slika 2: Prozori sa porukama o merenjima senzora i izvršenim
+	poravnanjima menadžera}
+\end{figure}
+Druga stvar koju je potrebno proveriti je da li su podaci upisani u bazu podataka
+i da li su validni.
+Na slici 3 se može videti da se vremenski sve poklapa, tj. da senzor upisuje u
+svoju tabelu na nasumničnom intervalu između 1 i 10 sekundi, dok menadžer
+upisuje poravnatu vrednost svakog minuta.
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=0.9\linewidth]{figs/rezultat_2.png}
+	\caption*{Slika 3: Prikaz redova u bazi podataka}
+\end{figure}
 \end{document}
 
