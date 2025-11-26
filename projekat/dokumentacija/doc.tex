@@ -99,24 +99,24 @@ Ovaj sistem se može opisati kao skup od 3 glavne komponente:
 \section{Organizacija rešenja}
 Rešenje se sastoji od 4 manja projekta, gde svaki predstavlja jednu od prethodno
 navedenih celina, sa tim da dodati četvrti projekat opisuje način
-struktuiranja podataka za upis u bazu:
+struktuiranja podataka za upis u bazu podataka:
 \begin{itemize}
-	\item ConsistencyService - WCF servis
-	\item ConsistencyManager - menadžer koji vrši poravnanje
-	\item Sensors - pokretanje niti koje simuliraju senzore
-	\item SensorsDatabaseContext - kontekst baze podataka
+	\item \textbf{ConsistencyService} - WCF servis
+	\item \textbf{ConsistencyManager} - menadžer koji vrši poravnanje
+	\item \textbf{Sensors} - pokretanje niti koje simuliraju senzore
+	\item \textbf{SensorsDatabaseContext} - organizacija baze podataka
 \end{itemize}
 \subsection{ConsistencyService}
 \subsubsection{ConsistencyService/ConsistencyService.cs} \label{sec:servicecs}
 Klasa \textbf{TemperatureInfo} opisuje oblik podataka koji se razmenjuju između
 korisnika servisa i formiraju ga 4 polja:
-\begin{enumerate}
+\begin{itemize}
 	\item \textbf{sensor\_id} - Identifikacioni broj senzora, broj od 1 do 10 
 	\item \textbf{temperature} - Vrednost temperature
 	\item \textbf{timestamp} - vremenski podatak
 	\item \textbf{source} - izvor podatka, tj. ko ga upisuje u bazu, senzor ili
 		menadžer tokom poravnanja
-\end{enumerate}
+\end{itemize}
 U ovom fajlu su samo još definisani interfejsi servisa. \textbf{IPublisher}
 definiše metod za upis u bazu, dok interfejs \textbf{ISubscriber} definiše metod
 za slanje upita.
@@ -129,8 +129,9 @@ koristi da i menadžer i senzori upisuju u bazu, tako što \textbf{source} polje
 postave na odgovarajuću vrednost.
 Poslednje očitavanje senzora se dobija pozivom \textbf{querySensor} i
 prosleđivanjem odgovarajućeg rednog broja.
-
-
+Obe ove funkcije vrše odgovarajuću tranformaciju tipova tako da korisnici
+servisa mogu da pozivaju operacije razmene informacija sa bazom podataka bez
+poznavanja unutrašnje organizacije u istoj.
 \subsection{ConsistencyManager}
 \subsubsection{ConsistencyManager/Program.cs}
 Sadrži dve funkcije, \textbf{Main} i \textbf{findBest}.
@@ -142,4 +143,65 @@ označi da je podatak upisan kao rezultat poravnanja i vreme kada je on upisan,
 takav podatak se upisuje u svaku od tabela.
 Potrebno je napomenuti da menadžer instancira \textit{subscribera} i 
 \textit{publishera}, koje koristi za upite i upise u bazu, respektivno.
+\subsection{Sensors}
+\subsubsection{Sensors/Program.cs}
+Svrha ovog fajla je da instancira 10 objekata klase \textbf{Sensors} i pokreće
+10 niti u vidu taskova.
+\subsubsection{Sensors/Sensor.cs}
+Definicija klase \textbf{Sensor}, koja sadrži 5 ali praktično 4 polja.
+\begin{itemize}
+	\item \textbf{sensorID} - redni broj senzora
+	\item \textbf{\_random} - statičko polje za generator nasumičnih brojeva
+	\item \textbf{maxTimeDelay} - maksimalni vremenski razmak do generisanja
+		sledeće vrednosti
+	\item \textbf{random} - generator koji je u konstrukturu postavljen na
+		statički generator
+	\item \textbf{publisherClient} - klijent servisa koji će pisati u bazu
+		podataka
+\end{itemize}
+Polje \textbf{random} je postavljeno da bude jednako statičkom \textbf{\_random}
+zato što ako svaka instanca senzora ima svoj generator, desiće se to da imam 10
+generatora nasumičnih brojeva sa vrlo sličnim "semenom" tj. \textbf{seed-om}.
+To znači da će sekvence generisanja brojeva za sve senzore biti identične zato
+što se implicitno koristi seed koji zavisi od vremena inicijalizacije.
+\subsection{SensorsDatabaseContext}
+\subsubsection{SensorsDatabaseContext/DbContext.cs}
+Definicija kako su organizovani podaci unutar baze podataka.
+Klasa \textbf{DBInfo\_Sensor} opisuje kako izgleda jedan red baze, odnosno kako
+se jedno očitavanje senzora predstavlja unutar baze i sadrži 4 polja:
+\begin{itemize}
+	\item \textbf{id} - redni broj podatka unutar tabele, nije povezano sa
+		rednim brojem senzora
+	\item \textbf{temperature} - temperatura koju je senzor očitao
+	\item \textbf{timestamp} - vreme očitavanja
+	\item \textbf{source} - ko je upisao podatak, senzor ili menadžer
+\end{itemize}
+Pošto je potrebno imati odvojenu tabelu za svaki od senzora, a \textit{Entity 
+Framework} zahteva da svaka tabela ima posebno definisan tip, jednostavno je
+napravljeno dodatnih 10 klasa \textbf{DBInfo\_Sensor1}, ... , \textbf{DBInfo\_
+Sensor10} i svaka od njih nasleđuje  \textbf{DBInfo\_Sensor}.
+\textbf{SensorsDBContext} je izveden iz \textbf{DbContext} i sadrži 10 polja,
+gde svako od njih predstavlja po jednu od tabela unutar baze podataka.
+\section{Rezultati}
+\subsection{Pokretanje}
+Za pravilno funkcionisanje napisanog koda, potrebno je pokrenuti projekte
+(desnim klikom na projekat \textit{Debug}$\rightarrow$\textit{Start new instance}) 
+u sledećem redosledu:
+\begin{enumerate}
+	\item \textbf{ConsistencyService} - WCF servis
+	\item \textbf{Sensors} - pokretanje niti koje simuliraju senzore
+	\item \textbf{ConsistencyManager} - menadžer koji vrši poravnanje
+\end{enumerate}
+Jedna olakšica jeste to što visual studio ima opciju da se na start dugme
+podigne proizvoljan broj projekata u proizvoljnom redosledu.
+Desnim klikom na naziv celog rešenja tj. \textbf{solution-a}, i odabirom opcije
+properties otvara se prozor gde je potrebno sa leve strane odabrati \textbf{Configure
+Startup Projects} i konfigurisati ga kao na slici:
+\begin{figure}[h!]
+	\includegraphics[width=\linewidth]{figs/Screenshot 2025-11-26 123940.png}
+	\caption*{Slika 1: Podešavanje pokretanja projekta}
+\end{figure}
+\subsection{Rezultati}
+
 \end{document}
+
