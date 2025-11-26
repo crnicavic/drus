@@ -162,8 +162,8 @@ Definicija klase \textbf{Sensor}, koja sadrži 5 ali praktično 4 polja.
 		dela koda koji generiše nasumične brojeve.
 \end{itemize}
 Polje \textbf{random} je postavljeno da bude jednako statičkom \textbf{\_random}
-zato što ako svaka instanca senzora ima svoj generator, desiće se to da imam 10
-generatora nasumičnih brojeva sa vrlo sličnim "semenom" tj. \textbf{seed-om}.
+zato što ako svaka instanca senzora ima svoj generator, desiće se to da postoji 
+10 generatora nasumičnih brojeva sa vrlo sličnim "semenom" tj. \textbf{seed-om}.
 To znači da će sekvence generisanja brojeva za sve senzore biti identične zato
 što se implicitno koristi seed koji zavisi od vremena inicijalizacije.
 Međutim, pošto objekat koji pravi nasumične brojeve može da pukne ukoliko ga
@@ -222,10 +222,22 @@ i da li su validni.
 Na slici 3 se može videti da se vremenski sve poklapa, tj. da senzor upisuje u
 svoju tabelu na nasumničnom intervalu između 1 i 10 sekundi, dok menadžer
 upisuje poravnatu vrednost svakog minuta.
-\begin{figure}[ht!]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\linewidth]{figs/rezultat_2.png}
 	\caption*{Slika 3: Prikaz redova u bazi podataka}
+\end{figure}
+\break
+\subsection{Resavanje potencijalnog SQL izuzetaka}
+Prilikom prebacivanja koda na drugi računar moguće je da se pojavi izuzetak pri
+pokretanju projekta.
+Rešenje za taj problem jeste obrisati bazu podataka u \textbf{View}$\rightarrow$
+\textbf{SQL Server Object Explorer} i obrisati bazu koju ovaj projekat kreira 
+\textbf{SensorsDatabaseContext.SensorsDBContext}. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{figs/SQL.png}
+	\caption*{Slika 4: Pregled baza u \textbf{SQL Server Object Explorer}}
 \end{figure}
 \end{document}
 
