@@ -77,6 +77,8 @@ namespace ConsistencyManager
 
             while (!cts.IsCancellationRequested)
             {
+                await Task.Delay(60000);
+
                 for (int id = 1; id <= 10; id++)
                 {
                     TemperatureInfo t = subscriberClient.querySensor(id);
@@ -99,7 +101,6 @@ namespace ConsistencyManager
                     best.sensor_id = id;
                     publisherClient.publishTemp(best);
                 }
-                await Task.Delay(10000);
             }
         }
     }

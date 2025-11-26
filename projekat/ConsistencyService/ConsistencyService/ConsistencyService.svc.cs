@@ -11,7 +11,6 @@ namespace ConsistencyService
 {
     public class ConsistencyService: IPublisher, ISubscriber
     {
-        public SensorsDBContext context = new SensorsDBContext();
         public void publishTemp(TemperatureInfo t)
         {
             DBInfo_Sensor row;
@@ -35,41 +34,46 @@ namespace ConsistencyService
             row.temperature = t.temperature;
             row.source = t.source;
 
-            switch (t.sensor_id)
+            using (SensorsDBContext context = new SensorsDBContext())
             {
-                case 1: context.SensorTable1.Add((DBInfo_Sensor1) row); break;
-                case 2: context.SensorTable2.Add((DBInfo_Sensor2) row); break;
-                case 3: context.SensorTable3.Add((DBInfo_Sensor3) row); break;
-                case 4: context.SensorTable4.Add((DBInfo_Sensor4) row); break;
-                case 5: context.SensorTable5.Add((DBInfo_Sensor5) row); break;
-                case 6: context.SensorTable6.Add((DBInfo_Sensor6) row); break;
-                case 7: context.SensorTable7.Add((DBInfo_Sensor7) row); break;
-                case 8: context.SensorTable8.Add((DBInfo_Sensor8) row); break;
-                case 9: context.SensorTable9.Add((DBInfo_Sensor9) row); break;
-                case 10: context.SensorTable10.Add((DBInfo_Sensor10) row); break;
-                default: throw new Exception("INVALID SENSOR ID!");
+                switch (t.sensor_id)
+                {
+                    case 1: context.SensorTable1.Add((DBInfo_Sensor1)row); break;
+                    case 2: context.SensorTable2.Add((DBInfo_Sensor2)row); break;
+                    case 3: context.SensorTable3.Add((DBInfo_Sensor3)row); break;
+                    case 4: context.SensorTable4.Add((DBInfo_Sensor4)row); break;
+                    case 5: context.SensorTable5.Add((DBInfo_Sensor5)row); break;
+                    case 6: context.SensorTable6.Add((DBInfo_Sensor6)row); break;
+                    case 7: context.SensorTable7.Add((DBInfo_Sensor7)row); break;
+                    case 8: context.SensorTable8.Add((DBInfo_Sensor8)row); break;
+                    case 9: context.SensorTable9.Add((DBInfo_Sensor9)row); break;
+                    case 10: context.SensorTable10.Add((DBInfo_Sensor10)row); break;
+                    default: throw new Exception("INVALID SENSOR ID!");
+                }
+                context.SaveChanges();           
             }
-
-            context.SaveChanges();
         }
 
         public TemperatureInfo querySensor(int id)
         {
             DBInfo_Sensor row;
-            switch (id)
+            using (SensorsDBContext context = new SensorsDBContext())
             {
-                case 1: row = context.SensorTable1.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
-                case 2: row = context.SensorTable2.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
-                case 3: row = context.SensorTable3.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
-                case 4: row = context.SensorTable4.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
-                case 5: row = context.SensorTable5.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
-                case 6: row = context.SensorTable6.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
-                case 7: row = context.SensorTable7.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
-                case 8: row = context.SensorTable8.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
-                case 9: row = context.SensorTable9.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
-                case 10: row = context.SensorTable10.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
-                default: throw new Exception("INVALID SENSOR ID!");
+                switch (id)
+                {
+                    case 1: row = context.SensorTable1.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                    case 2: row = context.SensorTable2.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                    case 3: row = context.SensorTable3.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                    case 4: row = context.SensorTable4.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                    case 5: row = context.SensorTable5.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                    case 6: row = context.SensorTable6.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                    case 7: row = context.SensorTable7.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                    case 8: row = context.SensorTable8.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                    case 9: row = context.SensorTable9.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                    case 10: row = context.SensorTable10.OrderByDescending(t => t.timestamp).FirstOrDefault(); break;
+                    default: throw new Exception("INVALID SENSOR ID!");
 
+                }
             }
 
             // if there is nothing return zeroes just to prevent crashes

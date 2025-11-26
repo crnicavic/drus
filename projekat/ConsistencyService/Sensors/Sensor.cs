@@ -12,6 +12,7 @@ namespace Sensors
         const int maxTimeDelay = 10;
         private Random random;
         private ServiceReference1.PublisherClient publisherClient;
+        private static readonly object _randomLock = new object();
 
         public Sensor(int id) {
             this.sensorID = id;
@@ -25,14 +26,19 @@ namespace Sensors
                 TemperatureInfo info = new TemperatureInfo();
                 info.sensor_id = this.sensorID;
                 info.source = "SENSOR";
+                double temperature = 0;
+                int delay = 0;
                 while (!cancelToken.IsCancellationRequested)
                 {
-                    // ensurance that the delay is at least 1 second
-                    int delay = random.Next() % (Sensor.maxTimeDelay - 1) + 1;
+
+                    lock (_randomLock)
+                    {
+                        // ensurance that the delay is at least 1 second
+                        delay = random.Next() % (Sensor.maxTimeDelay - 1) + 1;
+                        temperature = random.NextDouble() * 20 + 10;
+                    }
                     await Task.Delay(delay * 1000);
 
-                    // range of temperature is 10 - 30;
-                    double temperature = random.NextDouble() * 20 + 10;
                     info.temperature = temperature;
                     info.timestamp = DateTime.Now;
 
